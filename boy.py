@@ -1,5 +1,5 @@
 from pico2d import load_image, get_time
-from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT
+from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT,SDLK_a
 
 
 from state_machine import StateMachine
@@ -21,6 +21,46 @@ def right_up(e):
 
 def left_up(e):
     return e[0]=='INPUT' and e[1].type==SDL_KEYUP and e[1].key==SDLK_LEFT #수정
+
+def autorun_a_down(e):
+    return e[0]=='INPUT' and e[1].type==SDL_KEYDOWN and e[1].key==SDLK_a
+
+class AutoRun:
+
+    def __init__(self, boy):
+        self.boy = boy
+
+    def enter(self,e):
+        self.boy.dir = 0
+        self.boy.wait_start_time=get_time()
+
+    def exit(self,e):
+        pass
+
+    def do(self): #2초 이상되면 SLEEP
+        self.boy.frame = (self.boy.frame + 1) % 8
+        self.boy.x+=self.boy.dir*5 #속도 빠름
+        if get_time() - self.boy.wait_start_time> 5 :
+            self.boy.state_machine.handle_state_event(('TIME_OUT',None))
+
+        if self.boy.x>780:
+            self.boy.x=780
+            self.boy.dir=-1
+            self.boy.face_dir=-1 #자동 방향반전
+
+        elif self.boy.x<20:
+            self.boy.x=20
+            self.boy=1
+            self.boy.face_dir=1
+
+
+
+    def draw(self):
+        if self.boy.face_dir == 1: # right
+            self.boy.image.clip_draw(self.boy.frame * 100, 300, 150, 150, self.boy.x, self.boy.y)
+        else: # face_dir == -1: # left
+            self.boy.image.clip_draw(self.boy.frame * 100, 200, 150, 150, self.boy.x, self.boy.y)
+
 
 class Run:  #right down이아니라 left up일때도 발생할 수 잇다 동시입략?
 
@@ -115,11 +155,14 @@ class Boy:
         self.IDLE = Idle(self)
         self.SLEEP = Sleep(self)
         self.RUN = Run(self)
+        self.AUTORUN=AutoRun(self)
         self.state_machine = StateMachine(
         self.IDLE,{ #시작상태
             self.SLEEP: {space_down:self.IDLE,right_down:self.RUN,left_down:self.RUN},
-            self.IDLE:{right_down:self.RUN, left_down:self.RUN,left_up:self.RUN, right_up:self.RUN,time_out:self.SLEEP},
-            self.RUN: {right_down:self.RUN,left_down:self.RUN,right_up:self.IDLE, left_up:self.IDLE}
+            self.IDLE:{right_down:self.RUN, left_down:self.RUN,left_up:self.RUN, right_up:self.RUN,time_out:self.SLEEP,autorun_a_down:self.AUTORUN},
+            self.RUN: {right_down:self.RUN,left_down:self.RUN,right_up:self.IDLE, left_up:self.IDLE},
+            self.AUTORUN:{right_down:self.RUN,left_down:self.RUN,time_out:self.IDLE}
+
         }
         )
 
