@@ -40,7 +40,7 @@ class AutoRun:
 
     def do(self): #2초 이상되면 SLEEP
         self.boy.frame = (self.boy.frame + 1) % 8
-        self.boy.x+=self.boy.dir*5 #속도 빠름
+        self.boy.x+=self.boy.dir*10#속도 빠름
         if get_time() - self.boy.wait_start_time> 5 :
             self.boy.state_machine.handle_state_event(('TIME_OUT',None))
 
@@ -51,7 +51,7 @@ class AutoRun:
 
         elif self.boy.x<20:
             self.boy.x=20
-            self.boy=1
+            self.boy.dir=1
             self.boy.face_dir=1
 
 
