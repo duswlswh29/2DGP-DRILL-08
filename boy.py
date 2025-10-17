@@ -31,8 +31,8 @@ class AutoRun:
         self.boy = boy
 
     def enter(self,e):
-        self.boy.dir = 1
-        self.boy.face_dir=1
+        self.boy.dir = self.boy.face_dir #방향 1에서 수정
+
         self.boy.wait_start_time=get_time()
 
     def exit(self,e):
@@ -160,7 +160,7 @@ class Boy:
         self.state_machine = StateMachine(
         self.IDLE,{ #시작상태
             self.SLEEP: {space_down:self.IDLE,right_down:self.RUN,left_down:self.RUN},
-            self.IDLE:{right_down:self.RUN, left_down:self.RUN,left_up:self.RUN, right_up:self.RUN,time_out:self.SLEEP,autorun_a_down:self.AUTORUN},
+            self.IDLE:{right_down:self.RUN, left_down:self.RUN,left_up:self.IDLE, right_up:self.IDLE,time_out:self.SLEEP,autorun_a_down:self.AUTORUN},
             self.RUN: {right_down:self.RUN,left_down:self.RUN,right_up:self.IDLE, left_up:self.IDLE},
             self.AUTORUN:{right_down:self.RUN,left_down:self.RUN,time_out:self.IDLE}
 
