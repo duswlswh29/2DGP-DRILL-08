@@ -39,6 +39,12 @@ class Run:  #right down이아니라 left up일때도 발생할 수 잇다 동시
         self.boy.frame = (self.boy.frame + 1) % 8
         self.boy.x+=self.boy.dir*5
 
+        if self.boy.x>780:
+            self.boy.x=780
+        elif self.boy.x<20:
+            self.boy.x=20
+
+
 
 
 
