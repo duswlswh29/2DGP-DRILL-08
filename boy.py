@@ -20,7 +20,7 @@ def right_up(e):
     return e[0]=='INPUT' and e[1].type==SDL_KEYUP and e[1].key==SDLK_RIGHT
 
 def left_up(e):
-    return e[0]=='INPUT' and e[1].key==SDLK_LEFT
+    return e[0]=='INPUT' and e[1].type==SDL_KEYUP and e[1].key==SDLK_LEFT #수정
 
 class Run:  #right down이아니라 left up일때도 발생할 수 잇다 동시입략?
 
