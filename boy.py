@@ -38,9 +38,9 @@ class AutoRun:
     def exit(self,e):
         pass
 
-    def do(self): #5초 이상되면 SLEEP
+    def do(self):
         self.boy.frame = (self.boy.frame + 1) % 8
-        self.boy.x+=self.boy.dir*10#속도 빠름
+        self.boy.x+=self.boy.dir*10
         if get_time() - self.boy.wait_start_time> 5 :
             self.boy.state_machine.handle_state_event(('TIME_OUT',None))
 
@@ -63,7 +63,7 @@ class AutoRun:
             self.boy.image.clip_draw(self.boy.frame * 100, 0, 100, 100, self.boy.x, self.boy.y+10,150,150)
 
 
-class Run:  #right down이아니라 left up일때도 발생할 수 잇다 동시입략?
+class Run:
 
     def __init__(self, boy):
         self.boy = boy
