@@ -84,7 +84,7 @@ class Idle:
 
     def do(self): #2초 이상되면 SLEEP
         self.boy.frame = (self.boy.frame + 1) % 8
-        if get_time() - self.boy.wait_start_time> 2.0:
+        if get_time() - self.boy.wait_start_time> 2.5:
             self.boy.state_machine.handle_state_event(('TIME_OUT',None))
 
             #이게 그래서 2초 하고 프로그램이 죽어버리나? 음.. 아니면 그냥 sleep?
