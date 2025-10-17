@@ -38,7 +38,7 @@ class AutoRun:
     def exit(self,e):
         pass
 
-    def do(self): #2초 이상되면 SLEEP
+    def do(self): #5초 이상되면 SLEEP
         self.boy.frame = (self.boy.frame + 1) % 8
         self.boy.x+=self.boy.dir*10#속도 빠름
         if get_time() - self.boy.wait_start_time> 5 :
@@ -76,7 +76,7 @@ class Run:  #right down이아니라 left up일때도 발생할 수 잇다 동시
     def exit(self,e):
         pass
 
-    def do(self): #2초 이상되면 SLEEP
+    def do(self):
         self.boy.frame = (self.boy.frame + 1) % 8
         self.boy.x+=self.boy.dir*5
 
@@ -134,7 +134,7 @@ class Idle:
         if get_time() - self.boy.wait_start_time> 2.5:
             self.boy.state_machine.handle_state_event(('TIME_OUT',None))
 
-            #이게 그래서 2초 하고 프로그램이 죽어버리나? 음.. 아니면 그냥 sleep?
+
 
 
 
