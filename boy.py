@@ -31,7 +31,8 @@ class AutoRun:
         self.boy = boy
 
     def enter(self,e):
-        self.boy.dir = 0
+        self.boy.dir = 1
+        self.boy.face_dir=1
         self.boy.wait_start_time=get_time()
 
     def exit(self,e):
@@ -57,9 +58,9 @@ class AutoRun:
 
     def draw(self):
         if self.boy.face_dir == 1: # right
-            self.boy.image.clip_draw(self.boy.frame * 100, 300, 150, 150, self.boy.x, self.boy.y)
+            self.boy.image.clip_draw(self.boy.frame * 100, 100, 100, 100, self.boy.x, self.boy.y+10,150,150)
         else: # face_dir == -1: # left
-            self.boy.image.clip_draw(self.boy.frame * 100, 200, 150, 150, self.boy.x, self.boy.y)
+            self.boy.image.clip_draw(self.boy.frame * 100, 0, 100, 100, self.boy.x, self.boy.y+10,150,150)
 
 
 class Run:  #right down이아니라 left up일때도 발생할 수 잇다 동시입략?
